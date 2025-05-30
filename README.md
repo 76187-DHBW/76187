@@ -1,79 +1,55 @@
 # Strömungsmaschinen Pumpenanalyse
 
-## Indentifikationsnummer
-76187
+## Persönliche Nummer
+*76187*
 
 ## Projektbeschreibung
 
-Dieses Repository enthält das Projekt für die **Strömungsmaschinen-Vorlesung** an der **DHBW Karlsruhe**. Ziel des Projekts ist es, das Betriebsverhalten einer Wasserpumpe anhand vorliegender Messdaten und Herstellerangaben zu analysieren. Dabei werden der Energieverbrauch sowie die Effizienz der Pumpe berechnet und ausgewertet.
+**Dieses Repository dokumentiert ein Projekt im Rahmen der Vorlesung „Strömungsmaschinen“ an der DHBW Karlsruhe.**
+Ziel des Projekts ist es, das Betriebsverhalten einer Wasserpumpe auf Basis vorhandener Messdaten und Herstellerinformationen zu untersuchen.
+Im Mittelpunkt stehen dabei die Berechnung und Analyse des Energieverbrauchs sowie der Wirkungsgrad der Pumpe.
 
-## Projektkontext
+## Projekthintergrund
 
-Das Projekt untersucht eine Wasserpumpe in einer industriellen Umgebung. Die Messdaten, insbesondere der Volumenstrom, sind in der Datei `volume_flow_data.csv` gespeichert. Die Pumpe verfügt über einen Impellerdurchmesser von **264 mm**. Das Datenblatt des Herstellers liefert unter anderem die Förderhöhe (Pumpenkopf) in Abhängigkeit vom Volumenstrom.
+**Im Rahmen dieses Projekts wird eine Wasserpumpe untersucht, welche in einer industriellen Umgebung eingesetzt wird.**
+Die erfassten Messdaten – insbesondere der Volumenstrom – sind in der Datei *volume_flow_data.csv* gespeichert.
+Die Pumpe besitzt ein Laufrad mit einem Durchmesser von *264 mm*.
+Das zugehörige Herstellerdatenblatt stellt unter anderem die Förderhöhe (Pumpenkopf) in Abhängigkeit vom Volumenstrom zur Verfügung.
 
-## Anforderungen
-
-- **Python 3.x**  
-- **Jupyter Notebook** oder eine andere geeignete Python-Umgebung  
-- Python-Bibliotheken: **pandas**, **numpy**, **scipy**, **matplotlib** (für Visualisierung)
+## Projekt-Anforderungen
+ 
+Die Abgabe der Ausarbeitung erfolgt über dieses GitHub-Repository. In diesem werden das Python-Skript, sowie eine Beschreibung, welches den ausgearbeiten Code ergänzen und beschreiben soll. Das Skript diet zur Analyse und Auswertung der gegebenen Daten.
 
 ## Aufgabenstellung
 
-1. **Berechnung des Energieverbrauchs**  
-   Abschätzung der gesamten zugeführten elektrischen Energie basierend auf Messdaten des Volumenstroms.
+1. In der **ersten Aufgabe** soll die insgesamt von der *elektrischen Pumpe aufgenommene Energie* abgeschätzt werden. Grundlage dafür sind die Volumenstromdaten aus der *CSV-Datei*.
 
-2. **Bestimmung der Pumpen-Effizienz**  
-   Ermittlung der durchschnittlichen Effizienz als Verhältnis von hydraulischer Energie zu zugeführter elektrischer Energie.
+2. Die **zweite Aufgabe** widmet sich der Ermittlung der *durchschnittlichen Effizienz der Pumpe*, also dem Verhältnis zwischen aufgenommener elektrischer Leistung und tatsächlich erbrachter hydraulischer Leistung.
 
-3. **Berechnung der ungenutzten Energie**  
-   Bestimmung der Energieverluste, also der Energie, die nicht in hydraulische Arbeit umgesetzt wird.
+3. In der **dritten Aufgabe** wird die Differenz zwischen elektrischer und hydraulischer Leistung über den gesamten Zeitraum berechnet, um die *ungenutzte Energie* zu bestimmen.
 
-4. **Visualisierung**  
-   Darstellung der zeitlichen Verläufe von Volumenstrom, hydraulischer Leistung, Eingangsleistung und Verlustleistung.
+4. Abschließend sollen in der **vierten Aufgabe** aussagekräftige Visualisierungen erstellt werden, die das *Betriebsverhalten der Pumpe* veranschaulichen – beispielsweise durch Zeitreihen, Histogramme oder andere geeignete Diagrammformen.
 
-## Methodik
+## Erarbeitung des Projektes
 
-- **Datenverarbeitung**  
-  Umrechnung des Volumenstroms von m³/h in m³/s, Berechnung der Zeitdifferenz zwischen Messpunkten und Interpolation der Förderhöhe anhand der Herstellerkennlinie.
+1. Zunächst wird die *CSV-Datei* eingelesen, die Zeitstempel und Volumenstromwerte in m³/h enthält. Für die Berechnung der hydraulischen Leistung werden die zugehörigen Förderhöhen benötigt. Diese werden mithilfe von Kennlinienpunkten aus dem Datenblatt als Arrays definiert und anschließend interpoliert.
 
-- **Energieberechnung**  
-  Berechnung der hydraulischen Leistung und der elektrischen Eingangsleistung, gefolgt von der Integration über die Zeit zur Bestimmung des Energieverbrauchs.
+   Wichtige Konstanten hierbei sind:
 
-- **Effizienzberechnung**  
-  Bestimmung der Pumpenwirkungsgrade durch das Verhältnis von hydraulischer Energie zu Eingangsenergie.
+   - Dichte des Mediums: **ρ = 969 kg/m³**
+   - Erdbeschleunigung: **g = 9,81 m/s²**
+   - Messintervall: **Δt = 60 s**
+   - Wirkungsgrad der Pumpe: **η = 83,1 %**
+     
+   Mit der Formel: **"ρ · g · H · Q"** wird die hydraulische Leistung berechnet. Über den Wirkungsgrad lässt sich daraus die elektrische Energieaufnahme in kWh abschätzen.
 
-- **Visualisierung**  
-  Erstellung von Plots zur anschaulichen Darstellung der wichtigsten Kennwerte über den Messzeitraum.
+2. Für **Aufgabe 2** wird der tatsächliche Pumpenwirkungsgrad berechnet. Dazu werden erneut Kennlinienpunkte aus dem Datenblatt als Arrays definiert und interpoliert. Anschließend wird der durchschnittliche Wirkungsgrad ermittelt. Auf Basis dieses Werts wird der tatsächliche Energieaufwand neu berechnet und zur Korrektur von Aufgabe 1 ausgegeben.
+3. In **Aufgabe 3** wird die gesamte hydraulische Energie berechnet, indem die hydraulische Leistung über die Zeit aufsummiert wird. Anschließend wird sie mit der elektrischen Gesamtenergie aus Aufgabe 2 verglichen und die Differenz als ungenutzte Energie ausgegeben.
+4. Für die **vierte Aufgabe** sollen mehrere sinnvolle Visualisierungen ausgegeben werden:
 
- ## Formeln und Berechnungen
+   Das *erste Diagramm* zeigt die Verlustleistung aufgetragen über die Zeit. Es wird durch dieses Diagramm schnell ersichtlich, wie viel Leistung zu bestimmten Zeitpunkten nicht für den Antrieb des Mediums benutzt wird, sondern anders umgesetzt wird. Hierbei könnte im Falle der Instandhaltung schnell ersichtlich werden, wann der Verschleiß der Maschine zu hoch ist.
+   
+   Im *zweiten Diagramm* wird der Volumenstrom über der Zeit aufgetragen. Diese Ansicht ist besonders wichtig, um Engpässe zu ermitteln oder abzuleiten. Es ist schnell einsichtig, wann die Maschine welchen Volumenstrom geliefert hat. Hierbei könnten nach einer umfassenden Analyse Verbesserungen vorgenommen werden.
 
-- **Umrechnung Volumenstrom**  
-  Q = V / t  (Volumenstrom in m³/s)  
-  Der Volumenstrom wird aus den Messdaten in m³/h umgerechnet in m³/s durch Division durch 3600.
-
-- **Hydraulische Leistung**  
-  P_hydr = ρ * g * Q * H  
-  
-  mit  
-  ρ = Dichte des Mediums (969 kg/m³),  
-  g = Erdbeschleunigung (9,81 m/s²),  
-  Q = Volumenstrom (m³/s),  
-  H = Förderhöhe in Meter (aus Herstellerkennlinie interpoliert).
-
-- **Eingangsleistung**  
-  Die elektrische Eingangsleistung P_input wird aus Herstellerdaten in Abhängigkeit vom Volumenstrom interpoliert.
-
-- **Energie**  
-  Die zugeführte und hydraulisch umgesetzte Energie werden durch Integration der Leistungen über die Zeit berechnet:  
-  E = Σ P * Δt
-
-- **Wirkungsgrad**  
-  η = (E_hydraulisch / E_input) * 100 %
-
-## Visualisierung und Mittelwertbildung
-
-Für die Visualisierung der zeitlichen Verläufe wird ein gleitender Mittelwert (Rolling Mean) verwendet, um Messrauschen zu reduzieren und Trends besser sichtbar zu machen. 
-
-Der Mittelwert über ein kleines Fenster (z.B. 5 Messpunkte) glättet kurzfristige Schwankungen, die durch Messfehler oder kurzzeitige Störungen entstehen können, ohne die generelle Dynamik des Systems zu verfälschen. So werden aussagekräftigere Kurven für die hydraulische Leistung, Eingangsleistung und Verlustleistung erzeugt, die eine bessere Interpretation der Pumpenleistung über den Messzeitraum erlauben.
-
+   Im *dritten und letzten Schaubild* werden die **hydraulische** und die **elektrische Energie** zusammen dargestellt. Es zeigt die elektrische Leistungsaufnahme (magenta) und die hydraulische Leistungsabgabe (blau) der Pumpe im Vergleich. dieses Diagramm veranschaulicht das Verhältnis beider Größen zueinander.
 ---
