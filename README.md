@@ -1,47 +1,79 @@
-# Turbomachinery Student Project – Pump Analysis (DHBW Karlsruhe)
-This repository provides the project description and resources for students in the Turbomachinery course at DHBW Karlsruhe.
+# Strömungsmaschinen Pumpenanalyse
 
-The goal of the project is to analyze the operating behavior of a water pump using real measurement data and manufacturer specifications. Students will create their own Jupyter Notebook to perform the required calculations and analysis.
+## Indentifikationsnummer
+76187
 
+## Projektbeschreibung
 
-# Project Context
-- You are working with a water pump used in an industrial setup.
-- The manufacturer's data sheet for the pump is available.
-- The volumetric flow rate is measured after the pump and logged in a .csv file (volume_flow_data.csv).
-- The impeller diameter is 264 mm.
+Dieses Repository enthält das Projekt für die **Strömungsmaschinen-Vorlesung** an der **DHBW Karlsruhe**. Ziel des Projekts ist es, das Betriebsverhalten einer Wasserpumpe anhand vorliegender Messdaten und Herstellerangaben zu analysieren. Dabei werden der Energieverbrauch sowie die Effizienz der Pumpe berechnet und ausgewertet.
 
-# Your tasks
-You will write a Jupyter Notebook that performs the following:
+## Projektkontext
 
-**1. Calculate the energy consumption**
+Das Projekt untersucht eine Wasserpumpe in einer industriellen Umgebung. Die Messdaten, insbesondere der Volumenstrom, sind in der Datei `volume_flow_data.csv` gespeichert. Die Pumpe verfügt über einen Impellerdurchmesser von **264 mm**. Das Datenblatt des Herstellers liefert unter anderem die Förderhöhe (Pumpenkopf) in Abhängigkeit vom Volumenstrom.
 
-Estimate the total energy used by the pump over the measured period using the available volumetric flow rate data.
+## Anforderungen
 
-**2. Determine average pump efficiency**
+- **Python 3.x**  
+- **Jupyter Notebook** oder eine andere geeignete Python-Umgebung  
+- Python-Bibliotheken: **pandas**, **numpy**, **scipy**, **matplotlib** (für Visualisierung)
 
-Use the volumentric flow rate to determine the average pump efficiency.
+## Aufgabenstellung
 
-**3. Calculate unused energy**
-Determine how much of the input energy was converted into hydraulic work.
+1. **Berechnung des Energieverbrauchs**  
+   Abschätzung der gesamten zugeführten elektrischen Energie basierend auf Messdaten des Volumenstroms.
 
-**4. Optional: Add additional analyses**
-Include helpful visualizations such as:
-- Estimated power vs. time
-- Histograms or boxplots of operating behavior
+2. **Bestimmung der Pumpen-Effizienz**  
+   Ermittlung der durchschnittlichen Effizienz als Verhältnis von hydraulischer Energie zu zugeführter elektrischer Energie.
 
-# Resources Provided
-- Pump data sheet (https://ab-resale.com/wp-content/art_datasheets/AR4713.pdf)
-- Volumentric Flow Rate CSV File
+3. **Berechnung der ungenutzten Energie**  
+   Bestimmung der Energieverluste, also der Energie, die nicht in hydraulische Arbeit umgesetzt wird.
 
-# Tools 
-You are encouraged to use Jupyter Notebook.
+4. **Visualisierung**  
+   Darstellung der zeitlichen Verläufe von Volumenstrom, hydraulischer Leistung, Eingangsleistung und Verlustleistung.
 
-# Submission instructions
-Please submit your project by sending an email that includes the following:
-- A link to your GitHub or GitLab repository
+## Methodik
 
-The repository must contain:
-- A clear and concise README.md file explaining your work
-- Your completed Jupyter Notebook with code, comments, and results
+- **Datenverarbeitung**  
+  Umrechnung des Volumenstroms von m³/h in m³/s, Berechnung der Zeitdifferenz zwischen Messpunkten und Interpolation der Förderhöhe anhand der Herstellerkennlinie.
 
-Deadline and email address will be announced during the course.
+- **Energieberechnung**  
+  Berechnung der hydraulischen Leistung und der elektrischen Eingangsleistung, gefolgt von der Integration über die Zeit zur Bestimmung des Energieverbrauchs.
+
+- **Effizienzberechnung**  
+  Bestimmung der Pumpenwirkungsgrade durch das Verhältnis von hydraulischer Energie zu Eingangsenergie.
+
+- **Visualisierung**  
+  Erstellung von Plots zur anschaulichen Darstellung der wichtigsten Kennwerte über den Messzeitraum.
+
+ ## Formeln und Berechnungen
+
+- **Umrechnung Volumenstrom**  
+  Q = V / t  (Volumenstrom in m³/s)  
+  Der Volumenstrom wird aus den Messdaten in m³/h umgerechnet in m³/s durch Division durch 3600.
+
+- **Hydraulische Leistung**  
+  P_hydr = ρ * g * Q * H  
+  
+  mit  
+  ρ = Dichte des Mediums (969 kg/m³),  
+  g = Erdbeschleunigung (9,81 m/s²),  
+  Q = Volumenstrom (m³/s),  
+  H = Förderhöhe in Meter (aus Herstellerkennlinie interpoliert).
+
+- **Eingangsleistung**  
+  Die elektrische Eingangsleistung P_input wird aus Herstellerdaten in Abhängigkeit vom Volumenstrom interpoliert.
+
+- **Energie**  
+  Die zugeführte und hydraulisch umgesetzte Energie werden durch Integration der Leistungen über die Zeit berechnet:  
+  E = Σ P * Δt
+
+- **Wirkungsgrad**  
+  η = (E_hydraulisch / E_input) * 100 %
+
+## Visualisierung und Mittelwertbildung
+
+Für die Visualisierung der zeitlichen Verläufe wird ein gleitender Mittelwert (Rolling Mean) verwendet, um Messrauschen zu reduzieren und Trends besser sichtbar zu machen. 
+
+Der Mittelwert über ein kleines Fenster (z.B. 5 Messpunkte) glättet kurzfristige Schwankungen, die durch Messfehler oder kurzzeitige Störungen entstehen können, ohne die generelle Dynamik des Systems zu verfälschen. So werden aussagekräftigere Kurven für die hydraulische Leistung, Eingangsleistung und Verlustleistung erzeugt, die eine bessere Interpretation der Pumpenleistung über den Messzeitraum erlauben.
+
+---
